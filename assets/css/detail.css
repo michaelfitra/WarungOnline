@@ -1,0 +1,50 @@
+body {
+    background: #F8F9FA;
+    background: linear-gradient(90deg,rgba(248, 249, 250, 1) 0%, rgba(250, 241, 233, 1) 100%);
+    font-family: 'Roboto', sans-serif; /* Example font, ensure it's loaded if not default */
+}
+
+div {
+    background: transparent;
+}
+
+/* Styling untuk placeholder gambar produk */
+.product-image-placeholder {
+    background-color: #e9ecef; /* Warna light grey untuk placeholder */
+    border: 1px solid #dee2e6; /* Border tipis */
+}
+
+/* Penyesuaian input group untuk kuantitas */
+.quantity-control .form-control {
+    border-left: 0;
+    border-right: 0;
+}
+.quantity-control .btn-outline-secondary {
+    border-color: #ced4da; /* Warna border default Bootstrap */
+    color: #6c757d; /* Warna teks default Bootstrap */
+}
+.quantity-control .btn-outline-secondary:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+/* Penyesuaian tombol "Beli Sekarang" dan "+ Keranjang" */
+.btn-warning {
+    background-color: #ffc107; /* Orange color */
+    border-color: #ffc107;
+    color: #fff;
+}
+.btn-warning:hover {
+    background-color: #e0a800; /* Darker orange on hover */
+    border-color: #e0a800;
+    color: #fff;
+}
+
+.btn-outline-warning {
+    border-color: #ffc107; /* Orange border */
+    color: #ffc107; /* Orange text */
+}
+.btn-outline-warning:hover {
+    background-color: #ffc107; /* Orange background on hover */
+    color: #fff; /* White text on hover */
+}

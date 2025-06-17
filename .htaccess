@@ -1,0 +1,19 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# Prevent direct access to system files
+<Files "*.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Deny access to sensitive directories
+# <IfModule mod_rewrite.c>
+#     RewriteRule ^(system|config)/(.*) - [F,L]
+# </IfModule>
+
+# Cache static assets
+# <IfModule mod_expires.c>

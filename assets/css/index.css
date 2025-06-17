@@ -1,0 +1,15 @@
+body {
+    background-color: #f8f9fa; /* Light background similar to the image */
+    font-family: 'Roboto', sans-serif; /* Example font, ensure it's loaded if not default */
+}
+
+/* Custom styles for category cards, if needed */
+.card-category-icon {
+    font-size: 2.5rem; /* Adjust icon size */
+    color: #ffc107; /* Warning color for icons */
+}
+
+/* Ensure placeholder image area for products has a background */
+.card-img-top.bg-light {
+    background-color: #e9ecef !important; /* Slightly darker light for placeholder */
+}

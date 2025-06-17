@@ -1,0 +1,40 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Example font, ensure it's loaded if not default */
+}
+
+/* Styling untuk placeholder gambar produk di keranjang */
+.cart-item-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #e9ecef; /* Warna light grey untuk placeholder */
+}
+
+/* Penyesuaian input group untuk kuantitas */
+.quantity-control .form-control {
+    border-left: 0;
+    border-right: 0;
+}
+.quantity-control .btn-outline-secondary {
+    border-color: #ced4da; /* Warna border default Bootstrap */
+    color: #6c757d; /* Warna teks default Bootstrap */
+}
+.quantity-control .btn-outline-secondary:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+/* Styling untuk tombol hapus item */
+.delete-item {
+    color: #dc3545; /* Red color */
+    /* text-decoration: none; */
+}
+.delete-item:hover {
+    color: #c82333; /* Darker red on hover */
+}
+
+/* Penyesuaian input fields di ringkasan pembayaran */
+.card-body .form-control {
+    border-bottom: 1px solid #dee2e6; /* Only bottom border */
+}
