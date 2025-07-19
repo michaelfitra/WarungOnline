@@ -1,5 +1,11 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
+session_start();
+$errorMessage = '';
+if (isset($_SESSION['error'])) {
+    $errorMessage = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,8 +13,9 @@ include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="<?= URL::assets ('css/style.css') ?>">
+    <link rel="stylesheet" href="<?= URL::assets('css/style.css') ?>">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="login-container">
@@ -16,15 +23,15 @@ include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
             <h2>Login</h2>
             <p>Belum Punya Akun? <a href="register.php" class="register-link">Daftar</a></p>
 
-            <form>
+            <form method="POST" action="login_process.php">
                 <div class="form-group">
-                    <label for="email_handphone">Email/No.Handphone</label>
-                    <input type="text" id="email_handphone" name="email_handphone">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" required>
                 </div>
 
                 <div class="remember-me">
@@ -36,5 +43,16 @@ include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
             </form>
         </div>
     </div>
+
+    <?php if (!empty($errorMessage)): ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Gagal',
+            text: <?= json_encode($errorMessage) ?>,
+            confirmButtonColor: '#d33'
+        });
+    </script>
+    <?php endif; ?>
 </body>
 </html>

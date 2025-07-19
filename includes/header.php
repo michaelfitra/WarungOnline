@@ -1,19 +1,18 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
 ?>
 
-</html>
 <nav class="navbar navbar-expand-lg bg-none sticky-top py-3">
     <div class="container-fluid col-lg-10 col-xl-8 mx-auto gap-2">
 
-        <a class="navbar-brand" href="<?= URL::base(''); ?>" style="font-family: 'Consolas'; !ipmportant;">
+        <a class="navbar-brand" href="<?= URL::base(''); ?>" style="font-family: 'Consolas'; !important;">
             Toko<b style="color: orange;">Barokah</b>
         </a>
 
-        <div class="input-group me-3">
-            <input type="text" class="form-control" placeholder="Cari produk apa?" aria-label="Cari produk">
-            <button class="btn btn-dark" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
-        </div>
+        <form class="input-group me-3" action="<?= URL::base('index.php'); ?>" method="GET">
+            <input type="text" class="form-control" placeholder="Cari produk apa?" aria-label="Cari produk" name="search" value="<?= htmlspecialchars($_GET['search'] ?? ''); ?>">
+            <button class="btn btn-dark" type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+        </form>
 
         <div class="d-flex align-item-center gap-2">
             <a class="btn btn-outline-warning " type="button" href="<?= URL::base('views/keranjang.php'); ?>">

@@ -23,5 +23,17 @@ class URL {
         return $_SERVER['REQUEST_URI'];
     }
 }
+
+$host = 'localhost';
+$user = 'root';
+$pass = ''; // kosongkan kalau default XAMPP
+$db   = 'tokobarokah';
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
 ?>
 

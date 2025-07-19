@@ -1,0 +1,117 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+}
+
+.sidebar {
+  height: 100vh;
+  background-color: #19345e;
+  color: white;
+  padding: 1rem;
+}
+
+.sidebar h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background-color: #0d223d;
+  color: #ffc107;
+}
+
+.sidebar a i {
+  margin-right: 8px;
+}
+
+.topbar {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.main-content {
+  padding: 2rem;
+}
+
+#sidebar {
+  transition: all 1s;
+}
+
+/* laporan.php */
+
+.table thead {
+  background-color: orange;
+  color: white;
+}
+
+.btn-hapus {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.btn-hapus:hover {
+  background-color: darkorange;
+}
+
+/* order.php */
+
+.card-box {
+  background-color: #f2f2f2;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-box h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.badge-selesai {
+  background-color: #28a745;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+/* stok.php */
+
+.table-container {
+  background-color: #d1ecf9;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.btn-hapus {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.btn-hapus:hover {
+  background-color: darkorange;
+}
