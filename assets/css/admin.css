@@ -1,10 +1,12 @@
 body {
   font-family: "Segoe UI", sans-serif;
+  padding-top: 52px;
 }
 
 .sidebar {
+  position: fixed;
   height: 100vh;
-  background-color: #19345e;
+  /* background-color: #19345e; */
   color: white;
   padding: 1rem;
 }
@@ -29,7 +31,7 @@ body {
 
 .sidebar a.active,
 .sidebar a:hover {
-  background-color: #0d223d;
+  /* background-color: #0d223d; */
   color: #ffc107;
 }
 

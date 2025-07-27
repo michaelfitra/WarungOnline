@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2025 at 09:14 AM
+-- Generation Time: Jul 27, 2025 at 06:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `orders` (
   `user_id` int(11) DEFAULT NULL,
   `order_date` datetime DEFAULT current_timestamp(),
   `total_amount` decimal(10,2) DEFAULT NULL,
-  `status` enum('diproses','selesai') DEFAULT 'diproses'
+  `status` enum('diproses','siap_dijemput','selesai') DEFAULT 'diproses'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,9 +40,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `order_date`, `total_amount`, `status`) VALUES
-(1, 1, '2025-07-27 13:23:14', 75000.00, 'diproses'),
-(2, 2, '2025-07-27 13:37:21', 63500.00, 'diproses'),
-(3, 2, '2025-07-27 13:54:33', 58500.00, 'diproses');
+(1, 1, '2025-07-27 13:23:14', 75000.00, 'selesai'),
+(2, 2, '2025-07-27 13:37:21', 63500.00, 'selesai'),
+(3, 2, '2025-07-27 13:54:33', 58500.00, 'diproses'),
+(4, 1, '2025-07-27 22:29:18', 115500.00, 'diproses');
 
 -- --------------------------------------------------------
 
@@ -73,7 +74,11 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 (8, 3, 3, 1, 20000.00),
 (9, 3, 5, 1, 10000.00),
 (10, 3, 1, 1, 3500.00),
-(11, 3, 4, 1, 25000.00);
+(11, 3, 4, 1, 25000.00),
+(12, 4, 3, 1, 20000.00),
+(13, 4, 4, 3, 25000.00),
+(14, 4, 1, 3, 3500.00),
+(15, 4, 5, 1, 10000.00);
 
 -- --------------------------------------------------------
 
@@ -101,7 +106,7 @@ INSERT INTO `produk` (`id`, `nama`, `deskripsi`, `harga`, `gambar`, `stok`, `kat
 (3, 'Sabun Mandi Cair', 'Sabun mandi dengan aroma menyegarkan', 20000.00, 'sabun_mandi.jpg', 75, 'Kesehatan & Kebersihan'),
 (4, 'Minyak Goreng Kemasan 1 Liter', 'Minyak goreng berkualitas baik', 25000.00, 'minyak_goreng.jpg', 40, 'Dapur & Bahan Masak'),
 (5, 'Biskuit Coklat', 'Biskuit renyah dengan isian coklat', 10000.00, 'biskuit_coklat.jpg', 120, 'Makanan'),
-(15, 'testtttt', 'test joki', 20000.00, '687b64fb1518b.jpeg', 0, 'Dapur & Bahan Masak');
+(15, 'test berubah', 'test joki', 20000.00, '687b64fb1518b.jpeg', 11, 'Dapur & Bahan Masak');
 
 -- --------------------------------------------------------
 
@@ -123,7 +128,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `password`, `role`, `created_at`) VALUES
 (1, 'admin@tokobarokah.com', '$2y$10$fsFo.4Vn2pq7tr7Cn3UjfOiLSiWdIJD55qygM2IgQ/CiKd9btyICi', 'admin', '2025-07-19 08:15:25'),
-(2, 'mikel', '$2y$10$exJijHeqbkcEUo8YQL1KM.Rzom8XGDF0rwbUHZQeiTU24raIEOgzi', 'user', '2025-07-27 06:37:05');
+(2, 'mikel', '$2y$10$exJijHeqbkcEUo8YQL1KM.Rzom8XGDF0rwbUHZQeiTU24raIEOgzi', 'admin', '2025-07-27 06:37:05'),
+(3, 'dipo', '$2y$10$TQ19LjY3h3/iNNsAi3ugsuy6nRSTmciePPsU0dFk/v3GotladWLhW', 'user', '2025-07-27 08:14:34'),
+(4, 'sandi', '$2y$10$xqwMBN89dRJxuVxd4ejbMOFyUtz3NJyrmLKkpjuXgB9hx4YBEc5N2', 'user', '2025-07-27 08:28:03'),
+(5, 'test', '$2y$10$LhIqVXiwA6T7.FHkZKO0L.3.GZkYi.EZ8kSJECv.A8/A9jw5meu2u', 'user', '2025-07-27 08:28:24');
 
 --
 -- Indexes for dumped tables
@@ -165,25 +173,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

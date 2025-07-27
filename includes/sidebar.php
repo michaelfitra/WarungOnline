@@ -1,5 +1,5 @@
 
-<div class="sidebar col-md-2 d-none d-md-block" id="sidebar">
+<div class="sidebar" id="sidebar">
     <a href="<?= URL::base('views/admin/dashboard.php') ?>" class="<?= ($activePage == 'dashboard') ? 'active' : '' ?>">
         <i class="bi bi-grid"></i> 
         Dashboard

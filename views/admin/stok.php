@@ -1,7 +1,8 @@
 <?php
 include '../../includes/db.php';
 require_once '../../includes/auth_check.php';
-require_admin(); 
+require_admin();
+
 include '../../includes/header_admin.php';
 
 // Ambil data produk menggunakan PDO
@@ -30,8 +31,9 @@ try {
 <body>
     <div class="d-flex">
         <?php $activePage = 'stok'; ?>
-        <?php include '../../includes/sidebar.php'; ?>
-
+        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e; height: 100vh;">
+            <?php include '../../includes/sidebar.php'; ?>
+        </div>
         <!-- Main Content -->
         <div class="col-md-10">
 
@@ -49,9 +51,9 @@ try {
                             elseif ($_GET["status"] == "hapus")
                                 echo "Produk berhasil dihapus.";
                             ?>',
-                                        timer: 2000,
+                                            timer: 2000,
                                     showConfirmButton: false
-                                    });
+                                        });
                     </script>
                 <?php endif; ?>
 

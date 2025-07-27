@@ -3,15 +3,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
 ?>
 
 <!-- Navbar Atas -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between px-3">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark justify-content-between px-3">
   <!-- Tombol Burger -->
   <button class="btn d-md-none" id="sidebarToggle">
     <i class="bi bi-list" style="font-size: 1.5rem; color: white;"></i>
   </button>
 
   <!-- Kedai BAROKAH -->
-  <h4 style="font-family: 'Consolas'; !important;"><span style="color: white;">Toko</span><b
-      style="color: orange;">Barokah</b></h4>
+  <a class="navbar-brand" href="<?= URL::base(''); ?>" style="font-family: 'Consolas'; !important;"><span
+      style="color: white;">Toko</span><b style="color: orange;">Barokah</b></a>
 
   <!-- Profil Admin Dropdown -->
   <div class="dropdown">
