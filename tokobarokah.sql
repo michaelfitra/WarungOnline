@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2025 at 06:51 PM
+-- Generation Time: Jul 27, 2025 at 07:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,8 +42,8 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`id`, `user_id`, `order_date`, `total_amount`, `status`) VALUES
 (1, 1, '2025-07-27 13:23:14', 75000.00, 'selesai'),
 (2, 2, '2025-07-27 13:37:21', 63500.00, 'selesai'),
-(3, 2, '2025-07-27 13:54:33', 58500.00, 'diproses'),
-(4, 1, '2025-07-27 22:29:18', 115500.00, 'diproses');
+(3, 2, '2025-07-27 13:54:33', 58500.00, 'selesai'),
+(4, 1, '2025-07-27 22:29:18', 115500.00, 'selesai');
 
 -- --------------------------------------------------------
 
@@ -93,20 +93,91 @@ CREATE TABLE `produk` (
   `harga` decimal(10,2) NOT NULL,
   `gambar` varchar(255) DEFAULT NULL,
   `stok` int(11) NOT NULL DEFAULT 0,
-  `kategori` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `kategori` varchar(100) DEFAULT NULL,
+  `last_stock_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id`, `nama`, `deskripsi`, `harga`, `gambar`, `stok`, `kategori`) VALUES
-(1, 'Mie Instan Rasa Ayam Bawang', 'Mie instan lezat dengan bumbu ayam bawang', 3500.00, 'mie_ayam_bawang.jpg', 100, 'Makanan'),
-(2, 'Kopi Hitam Bubuk', 'Kopi hitam murni tanpa ampas', 15000.00, 'kopi_hitam.jpg', 50, 'Minuman'),
-(3, 'Sabun Mandi Cair', 'Sabun mandi dengan aroma menyegarkan', 20000.00, 'sabun_mandi.jpg', 75, 'Kesehatan & Kebersihan'),
-(4, 'Minyak Goreng Kemasan 1 Liter', 'Minyak goreng berkualitas baik', 25000.00, 'minyak_goreng.jpg', 40, 'Dapur & Bahan Masak'),
-(5, 'Biskuit Coklat', 'Biskuit renyah dengan isian coklat', 10000.00, 'biskuit_coklat.jpg', 120, 'Makanan'),
-(15, 'test berubah', 'test joki', 20000.00, '687b64fb1518b.jpeg', 11, 'Dapur & Bahan Masak');
+INSERT INTO `produk` (`id`, `nama`, `deskripsi`, `harga`, `gambar`, `stok`, `kategori`, `last_stock_update`) VALUES
+(1, 'Mie Instan Rasa Ayam Bawang', 'Mie instan lezat dengan bumbu ayam bawang', 3500.00, 'mie_ayam_bawang.jpg', 96, 'Makanan', '2025-07-27 17:21:01'),
+(2, 'Kopi Hitam Bubuk', 'Kopi hitam murni tanpa ampas', 15000.00, 'kopi_hitam.jpg', 50, 'Minuman', '2025-07-27 17:12:54'),
+(3, 'Sabun Mandi Cair', 'Sabun mandi dengan aroma menyegarkan', 20000.00, 'sabun_mandi.jpg', 73, 'Kesehatan & Kebersihan', '2025-07-27 17:21:01'),
+(4, 'Minyak Goreng Kemasan 1 Liter', 'Minyak goreng berkualitas baik', 25000.00, 'minyak_goreng.jpg', 36, 'Dapur & Bahan Masak', '2025-07-27 17:21:01'),
+(5, 'Biskuit Coklat', 'Biskuit renyah dengan isian coklat', 10000.00, 'biskuit_coklat.jpg', 118, 'Makanan', '2025-07-27 17:21:01'),
+(15, 'test berubah', 'test joki', 20000.00, '687b64fb1518b.jpeg', 11, 'Dapur & Bahan Masak', '2025-07-27 17:12:54');
+
+--
+-- Triggers `produk`
+--
+DELIMITER $$
+CREATE TRIGGER `log_stock_changes` AFTER UPDATE ON `produk` FOR EACH ROW BEGIN
+    IF OLD.stok != NEW.stok THEN
+        INSERT INTO `stock_logs` (
+            `product_id`, 
+            `old_stock`, 
+            `new_stock`, 
+            `change_amount`, 
+            `change_type`,
+            `reason`
+        ) VALUES (
+            NEW.id,
+            OLD.stok,
+            NEW.stok,
+            NEW.stok - OLD.stok,
+            CASE 
+                WHEN NEW.stok > OLD.stok THEN 'addition'
+                ELSE 'reduction'
+            END,
+            'Stock updated via system'
+        );
+    END IF;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_logs`
+--
+
+CREATE TABLE `stock_logs` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `old_stock` int(11) NOT NULL,
+  `new_stock` int(11) NOT NULL,
+  `change_amount` int(11) NOT NULL,
+  `change_type` enum('reduction','addition','manual') NOT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stock_logs`
+--
+
+INSERT INTO `stock_logs` (`id`, `product_id`, `order_id`, `old_stock`, `new_stock`, `change_amount`, `change_type`, `reason`, `created_at`, `created_by`) VALUES
+(1, 1, NULL, 100, 97, -3, 'reduction', 'Stock updated via system', '2025-07-27 17:18:29', NULL),
+(2, 3, NULL, 75, 74, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:18:29', NULL),
+(3, 4, NULL, 40, 37, -3, 'reduction', 'Stock updated via system', '2025-07-27 17:18:29', NULL),
+(4, 5, NULL, 120, 119, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:18:29', NULL),
+(5, 1, NULL, 97, 96, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:18:33', NULL),
+(6, 3, NULL, 74, 73, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:18:33', NULL),
+(7, 4, NULL, 37, 36, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:18:33', NULL),
+(8, 5, NULL, 119, 118, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:18:33', NULL),
+(9, 1, NULL, 96, 99, 3, 'addition', 'Stock updated via system', '2025-07-27 17:19:04', NULL),
+(10, 3, NULL, 73, 74, 1, 'addition', 'Stock updated via system', '2025-07-27 17:19:04', NULL),
+(11, 4, NULL, 36, 39, 3, 'addition', 'Stock updated via system', '2025-07-27 17:19:04', NULL),
+(12, 5, NULL, 118, 119, 1, 'addition', 'Stock updated via system', '2025-07-27 17:19:04', NULL),
+(13, 1, NULL, 99, 96, -3, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
+(14, 3, NULL, 74, 73, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
+(15, 4, NULL, 39, 36, -3, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
+(16, 5, NULL, 119, 118, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -142,21 +213,33 @@ INSERT INTO `users` (`id`, `email`, `password`, `role`, `created_at`) VALUES
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `idx_orders_status` (`status`),
+  ADD KEY `idx_orders_date` (`order_date`);
 
 --
 -- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `idx_order_items_order_product` (`order_id`,`product_id`);
 
 --
 -- Indexes for table `produk`
 --
 ALTER TABLE `produk`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_produk_stok` (`stok`);
+
+--
+-- Indexes for table `stock_logs`
+--
+ALTER TABLE `stock_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `created_by` (`created_by`);
 
 --
 -- Indexes for table `users`
@@ -185,6 +268,12 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stock_logs`
+--
+ALTER TABLE `stock_logs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
@@ -209,6 +298,14 @@ ALTER TABLE `orders`
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `produk` (`id`);
+
+--
+-- Constraints for table `stock_logs`
+--
+ALTER TABLE `stock_logs`
+  ADD CONSTRAINT `stock_logs_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `produk` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `stock_logs_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `stock_logs_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
