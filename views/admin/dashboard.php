@@ -1,4 +1,11 @@
-<?php $activePage = 'dashboard'; ?>
+<?php 
+require_once '../../includes/db.php';
+require_once '../../includes/auth_check.php';
+require_admin(); 
+
+$activePage = 'dashboard'; 
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 

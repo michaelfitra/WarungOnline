@@ -1,6 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
 include '../../includes/db.php';
+require_once '../../includes/auth_check.php';
+require_admin(); 
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

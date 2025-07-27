@@ -1,6 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
 include '../../includes/db.php';
+require_once '../../includes/auth_check.php';
+require_admin(); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];

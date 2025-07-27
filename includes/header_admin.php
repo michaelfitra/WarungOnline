@@ -26,7 +26,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+      <li><a class="dropdown-item text-danger" href="<?= URL::base('actions/logout.php'); ?>">Logout</a></li>
     </ul>
   </div>
 </nav>

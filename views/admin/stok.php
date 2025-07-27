@@ -1,5 +1,7 @@
 <?php
 include '../../includes/db.php';
+require_once '../../includes/auth_check.php';
+require_admin(); 
 include '../../includes/header_admin.php';
 
 // Ambil data produk menggunakan PDO
