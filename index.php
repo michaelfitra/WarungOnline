@@ -17,13 +17,15 @@
             right: 20px;
             z-index: 1050;
         }
+
         .product-img {
             width: 100%;
-            height: 180px; 
-            object-fit: cover; 
+            height: 180px;
+            object-fit: cover;
             border-top-left-radius: calc(.25rem - 1px);
             border-top-right-radius: calc(.25rem - 1px);
         }
+
         .card-body .product-title {
             height: auto;
             overflow: hidden;
@@ -32,17 +34,18 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
         .product-price {
             font-size: 1.25rem;
             font-weight: bold;
-            color: #dc3545; 
+            color: #dc3545;
         }
     </style>
 </head>
 
 <body>
     <?php
-    require_once 'includes/db.php'; 
+    require_once 'includes/db.php';
     include 'includes/header.php';
 
     $products = [];
@@ -50,9 +53,9 @@
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search_query = '%' . $_GET['search'] . '%';
-        $sql = "SELECT id, nama, deskripsi, harga, gambar, kategori FROM produk WHERE nama LIKE ? ORDER BY nama LIMIT 12"; 
+        $sql = "SELECT id, nama, deskripsi, harga, gambar, kategori FROM produk WHERE nama LIKE ? ORDER BY nama LIMIT 12";
     } else {
-        $sql = "SELECT id, nama, deskripsi, harga, gambar, kategori FROM produk ORDER BY RAND() LIMIT 6"; 
+        $sql = "SELECT id, nama, deskripsi, harga, gambar, kategori FROM produk ORDER BY RAND() LIMIT 6";
     }
 
     try {
@@ -74,7 +77,8 @@
                 <h3 class="mb-3">Kategori</h3>
                 <div class="row mb-5 justify-content-start">
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-                        <a href="<?= base_url('views/katalog.php?kategori=Makanan'); ?>" class="text-decoration-none text-dark">
+                        <a href="<?= base_url('views/katalog.php?kategori=Makanan'); ?>"
+                            class="text-decoration-none text-dark">
                             <div class="card h-100 text-center py-4 bg-white shadow-sm border-0">
                                 <i class="fas fa-utensils fa-2x mb-2 text-warning"></i>
                                 <p class="card-text fw-bold">Makanan</p>
@@ -82,7 +86,8 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-                        <a href="<?= base_url('views/katalog.php?kategori=Minuman'); ?>" class="text-decoration-none text-dark">
+                        <a href="<?= base_url('views/katalog.php?kategori=Minuman'); ?>"
+                            class="text-decoration-none text-dark">
                             <div class="card h-100 text-center py-4 bg-white shadow-sm border-0">
                                 <i class="fas fa-cocktail fa-2x mb-2 text-warning"></i>
                                 <p class="card-text fw-bold">Minuman</p>
@@ -90,7 +95,8 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-                        <a href="<?= base_url('views/katalog.php?kategori=Kesehatan & Kebersihan'); ?>" class="text-decoration-none text-dark">
+                        <a href="<?= base_url('views/katalog.php?kategori=Kesehatan & Kebersihan'); ?>"
+                            class="text-decoration-none text-dark">
                             <div class="card h-100 text-center py-4 bg-white shadow-sm border-0">
                                 <i class="fas fa-hand-sparkles fa-2x mb-2 text-warning"></i>
                                 <p class="card-text fw-bold">Kesehatan & <br>Kebersihan</p>
@@ -98,14 +104,15 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-                        <a href="<?= base_url('views/katalog.php?kategori=Dapur & Bahan Masak'); ?>" class="text-decoration-none text-dark">
+                        <a href="<?= base_url('views/katalog.php?kategori=Dapur & Bahan Masak'); ?>"
+                            class="text-decoration-none text-dark">
                             <div class="card h-100 text-center py-4 bg-white shadow-sm border-0">
                                 <i class="fas fa-mortar-pestle fa-2x mb-2 text-warning"></i>
                                 <p class="card-text fw-bold">Dapur & <br>Bahan Masak</p>
                             </div>
                         </a>
                     </div>
-                    </div>
+                </div>
             <?php endif; ?>
 
             <h3 class="mb-3">
@@ -119,7 +126,7 @@
                 <?php
                 if (!empty($products)) {
                     foreach ($products as $product) {
-                        include 'includes/card.php'; 
+                        include 'includes/card.php';
                     }
                 } else {
                     if (!empty($search_query)) {
@@ -154,18 +161,18 @@
                         },
                         body: 'product_id=' + productId
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showNotification(data.message, 'success');
-                        } else {
-                            showNotification(data.message, 'danger');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('Terjadi kesalahan saat menambahkan produk ke keranjang.', 'danger');
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showNotification(data.message, 'success');
+                            } else {
+                                showNotification(data.message, 'danger');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showNotification('Terjadi kesalahan saat menambahkan produk ke keranjang.', 'danger');
+                        });
                 });
             });
 
@@ -184,6 +191,21 @@
             }
         });
     </script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Pesanan Anda akan diproses.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    <?php endif; ?>
+
 </body>
 
 </html>
