@@ -2,19 +2,13 @@
 include '../../includes/db.php';
 include '../../includes/header_admin.php';
 
-// Ambil data produk
-$sql = "SELECT * FROM produk ORDER BY id ASC";
-$result = $conn->query($sql);
-
-if (!$result) {
-    die("Query gagal: " . $conn->error);
-}
-
-$produk = [];
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $produk[] = $row;
-    }
+// Ambil data produk menggunakan PDO
+try {
+    $sql = "SELECT * FROM produk ORDER BY id ASC";
+    $stmt = $pdo->query($sql);
+    $produk = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Query gagal: " . $e->getMessage());
 }
 ?>
 

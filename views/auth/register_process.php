@@ -1,61 +1,47 @@
 <?php
 session_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
+require_once '../../includes/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = trim($_POST['email']);
-    $password = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    // Validasi sederhana
+    // Validasi input
     if (empty($email) || empty($password)) {
         $_SESSION['register_alert'] = [
-            'type' => 'error',
-            'message' => 'Email dan Password wajib diisi.'
+            'message' => 'Email dan password wajib diisi.',
+            'type' => 'error'
         ];
         header("Location: register.php");
         exit;
     }
 
-    // Cek apakah email sudah terdaftar
-    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    // Cek apakah email sudah digunakan
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $emailExists = $stmt->fetchColumn();
 
-    if ($stmt->num_rows > 0) {
+    if ($emailExists) {
         $_SESSION['register_alert'] = [
-            'type' => 'error',
-            'message' => 'Email sudah terdaftar.'
+            'message' => 'Email sudah terdaftar.',
+            'type' => 'error'
         ];
         header("Location: register.php");
         exit;
     }
 
-    // Hash password dan simpan
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $role = 'user';
+    // Simpan user baru
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, 'user')");
+    $stmt->execute([$email, $hashedPassword]);
 
-    $stmt = $conn->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $email, $hashed_password, $role);
-
-    if ($stmt->execute()) {
-        $_SESSION['register_alert'] = [
-            'type' => 'success',
-            'message' => 'Pendaftaran berhasil! Silakan login.'
-        ];
-    } else {
-        $_SESSION['register_alert'] = [
-            'type' => 'error',
-            'message' => 'Terjadi kesalahan saat menyimpan data.'
-        ];
-    }
-
-    $stmt->close();
-    $conn->close();
-
+    $_SESSION['register_alert'] = [
+        'message' => 'Registrasi berhasil. Silakan login.',
+        'type' => 'success'
+    ];
     header("Location: register.php");
     exit;
 } else {
-    header("Location: login.php");
+    header("Location: register.php");
     exit;
 }

@@ -9,16 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stok = $_POST['stok'];
     $harga = $_POST['harga'];
 
-    $stmt = $conn->prepare("UPDATE produk SET nama=?, kategori=?, stok=?, harga=? WHERE id=?");
-    $stmt->bind_param("ssidi", $nama, $kategori, $stok, $harga, $id);
-
-    if ($stmt->execute()) {
+    try {
+        $stmt = $pdo->prepare("UPDATE produk SET nama=?, kategori=?, stok=?, harga=? WHERE id=?");
+        $stmt->execute([$nama, $kategori, $stok, $harga, $id]);
+        
         header("Location: stok.php?status=update");
-    } else {
-        echo "Gagal memperbarui produk: " . $conn->error;
+        exit;
+    } catch (PDOException $e) {
+        echo "Gagal memperbarui produk: " . $e->getMessage();
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>

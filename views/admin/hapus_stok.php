@@ -5,40 +5,35 @@ include '../../includes/db.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // Ambil nama file gambar sebelum hapus
-    $query = $conn->prepare("SELECT gambar FROM produk WHERE id = ?");
-    $query->bind_param("i", $id);
-    $query->execute();
-    $result = $query->get_result();
+    try {
+        // Ambil nama file gambar sebelum hapus
+        $query = $pdo->prepare("SELECT gambar FROM produk WHERE id = ?");
+        $query->execute([$id]);
+        $data = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ($result && $result->num_rows > 0) {
-        $data = $result->fetch_assoc();
-        $gambar = $data['gambar'];
+        if ($data) {
+            $gambar = $data['gambar'];
 
-        // Hapus file gambar jika ada
-        if ($gambar) {
-            $filePath = $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/assets/images/' . $gambar;
-            if (file_exists($filePath)) {
-                unlink($filePath);
+            // Hapus file gambar jika ada
+            if ($gambar) {
+                $filePath = $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/assets/images/' . $gambar;
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
             }
-        }
 
-        // Hapus dari database
-        $stmt = $conn->prepare("DELETE FROM produk WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
+            // Hapus dari database
+            $stmt = $pdo->prepare("DELETE FROM produk WHERE id = ?");
+            $stmt->execute([$id]);
+            
             header("Location: stok.php?status=hapus");
             exit;
         } else {
-            echo "Gagal menghapus produk: " . $conn->error;
+            echo "Produk tidak ditemukan.";
         }
-    } else {
-        echo "Produk tidak ditemukan.";
+    } catch (PDOException $e) {
+        echo "Gagal menghapus produk: " . $e->getMessage();
     }
-
-    $query->close();
-    $stmt->close();
-    $conn->close();
 } else {
     echo "ID tidak ditemukan.";
 }

@@ -1,42 +1,38 @@
 <?php
 session_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/WarungOnline/system/config.php';
+require_once '../../includes/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = trim($_POST['email']);
-    $password = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->bind_param("s", $input);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user = $result->fetch_assoc()) {
+    if ($user) {
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
-            $_SESSION['email'] = $user['email'];
 
+            // Redirect sesuai role
             if ($user['role'] === 'admin') {
-                header("Location: /WarungOnline/views/admin/dashboard.php");
-                exit;
+                header("Location: ../admin/dashboard.php");
             } else {
-                $last_page = $_SESSION['last_page'] ?? '/WarungOnline/index';
-                header("Location: $last_page");
-                exit;
+                header("Location: ../../index.php");
             }
+            exit;
         } else {
             $_SESSION['error'] = "Password tidak sesuai.";
             header("Location: login.php");
             exit;
         }
     } else {
-        $_SESSION['error'] = "Akun tidak ditemukan.";
+        $_SESSION['error'] = "Email tidak ditemukan.";
         header("Location: login.php");
         exit;
     }
 } else {
-    $_SESSION['error'] = "Akses tidak valid.";
     header("Location: login.php");
     exit;
 }

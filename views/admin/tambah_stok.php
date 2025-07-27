@@ -30,16 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $stmt = $conn->prepare("INSERT INTO produk (nama, deskripsi, harga, gambar, stok, kategori) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdsss", $nama, $deskripsi, $harga, $gambar, $stok, $kategori);
-
-    if ($stmt->execute()) {
+    try {
+        $stmt = $pdo->prepare("INSERT INTO produk (nama, deskripsi, harga, gambar, stok, kategori) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nama, $deskripsi, $harga, $gambar, $stok, $kategori]);
+        
         header("Location: stok.php?status=berhasil");
-    } else {
-        echo "Gagal menambahkan produk: " . $conn->error;
+        exit;
+    } catch (PDOException $e) {
+        echo "Gagal menambahkan produk: " . $e->getMessage();
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
