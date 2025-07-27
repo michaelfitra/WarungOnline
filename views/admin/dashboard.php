@@ -266,7 +266,7 @@ for ($i = 6; $i >= 0; $i--) {
 <body>
     <?php include '../../includes/header_admin.php' ?>
     <div class="d-flex">
-        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e;">
+        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e; min-height: 100vh;">
             <?php include '../../includes/sidebar.php'; ?>
         </div>
 

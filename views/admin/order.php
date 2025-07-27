@@ -120,7 +120,7 @@ $low_stock_products = $low_stock_stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include '../../includes/header_admin.php' ?>
     <div class="d-flex">
         <?php $activePage = 'order'; ?>
-        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e; height: 100vh;">
+        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e; min-height: 100vh;">
             <?php include '../../includes/sidebar.php'; ?>
         </div>
 

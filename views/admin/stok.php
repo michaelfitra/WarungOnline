@@ -121,9 +121,8 @@ try {
         }
 
         .table th {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: #f8f9fa 0%;
             font-weight: 600;
-            color: #495057;
             border: none;
             padding: 15px 10px;
         }
@@ -256,7 +255,7 @@ try {
 <body>
     <div class="d-flex">
         <?php $activePage = 'stok'; ?>
-        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e;">
+        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e; min-height: 100vh;">
             <?php include '../../includes/sidebar.php'; ?>
         </div>
         

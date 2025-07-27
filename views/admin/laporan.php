@@ -159,7 +159,7 @@ $paged_data = array_slice($laporan_data, $offset, $items_per_page);
 <body>
     <?php include '../../includes/header_admin.php' ?>
     <div class="d-flex">
-        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e;">
+        <div class="col-md-2 d-none d-md-block" style="background-color: #19345e; min-height: 100vh;">
             <?php include '../../includes/sidebar.php'; ?>
         </div>
         <!-- Main Content -->
