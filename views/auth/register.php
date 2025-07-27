@@ -28,13 +28,13 @@ if (isset($_SESSION['register_alert'])) {
             <form method="POST" action="register_process.php">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" required>
+                    <input type="text" id="email" name="email" style="width: 100%" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
+                    <input type="password" id="password" name="password" style="width: 100%" required>
+                </div> <br>
 
                 <button type="submit" class="login-button">Daftar</button>
             </form>
