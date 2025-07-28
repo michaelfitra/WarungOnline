@@ -1,6 +1,5 @@
 <?php
 require_once '../includes/db.php'; 
-include '../includes/header.php';
 
 $products = [];
 $selected_category = '';
@@ -67,6 +66,7 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
 </head>
 
 <body>
+    <?php include '../includes/header.php'; ?>
     <div class="container col-lg-10 col-xl-8 mx-auto mt-3">
         <h3 class="mb-3">
             <?php

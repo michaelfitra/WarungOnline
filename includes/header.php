@@ -5,7 +5,8 @@ $isLoggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 
 ?>
 
-<nav class="navbar navbar-expand-lg bg-none sticky-top py-3">
+<nav class="navbar navbar-expand-lg bg-none sticky-top py-3"
+    style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 10px;">
     <div class="container-fluid col-lg-10 col-xl-8 mx-auto gap-2">
 
         <a class="navbar-brand" href="<?= URL::base(''); ?>" style="font-family: 'Consolas'; !important;">
@@ -23,7 +24,7 @@ $isLoggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
                 <i class="fas fa-shopping-basket fa-lg"></i>
             </a>
             <?php if ($isLoggedIn): ?>
-                <a href="#" class="btn btn-outline-secondary ">Chat</a>
+                <a href="<?= URL::base('views/pesanan.php'); ?>" class="btn btn-outline-secondary ">Pesanan</a>
                 <a href="<?= URL::base('actions/logout.php'); ?>" class="btn btn-dark">Logout</a>
             <?php else: ?>
                 <a href="<?= URL::base('views/auth/login.php'); ?>" class="btn btn-outline-secondary ">Login</a>
