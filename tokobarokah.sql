@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2025 at 07:41 PM
+-- Generation Time: Jul 28, 2025 at 03:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,8 @@ INSERT INTO `orders` (`id`, `user_id`, `order_date`, `total_amount`, `status`) V
 (1, 1, '2025-07-27 13:23:14', 75000.00, 'selesai'),
 (2, 2, '2025-07-27 13:37:21', 63500.00, 'selesai'),
 (3, 2, '2025-07-27 13:54:33', 58500.00, 'selesai'),
-(4, 1, '2025-07-27 22:29:18', 115500.00, 'selesai');
+(4, 1, '2025-07-27 22:29:18', 115500.00, 'selesai'),
+(5, 3, '2025-07-28 08:32:02', 130000.00, 'selesai');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,12 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 (12, 4, 3, 1, 20000.00),
 (13, 4, 4, 3, 25000.00),
 (14, 4, 1, 3, 3500.00),
-(15, 4, 5, 1, 10000.00);
+(15, 4, 5, 1, 10000.00),
+(16, 5, 2, 2, 15000.00),
+(17, 5, 5, 1, 10000.00),
+(18, 5, 15, 1, 20000.00),
+(19, 5, 4, 2, 25000.00),
+(20, 5, 3, 1, 20000.00);
 
 -- --------------------------------------------------------
 
@@ -103,11 +109,11 @@ CREATE TABLE `produk` (
 
 INSERT INTO `produk` (`id`, `nama`, `deskripsi`, `harga`, `gambar`, `stok`, `kategori`, `last_stock_update`) VALUES
 (1, 'Mie Instan Rasa Ayam Bawang', 'Mie instan lezat dengan bumbu ayam bawang', 3500.00, 'mie_ayam_bawang.jpg', 96, 'Makanan', '2025-07-27 17:21:01'),
-(2, 'Kopi Hitam Bubuk', 'Kopi hitam murni tanpa ampas', 15000.00, 'kopi_hitam.jpg', 50, 'Minuman', '2025-07-27 17:12:54'),
-(3, 'Sabun Mandi Cair', 'Sabun mandi dengan aroma menyegarkan', 20000.00, 'sabun_mandi.jpg', 73, 'Kesehatan & Kebersihan', '2025-07-27 17:21:01'),
-(4, 'Minyak Goreng Kemasan 1 Liter', 'Minyak goreng berkualitas baik', 25000.00, 'minyak_goreng.jpg', 36, 'Dapur & Bahan Masak', '2025-07-27 17:21:01'),
-(5, 'Biskuit Coklat', 'Biskuit renyah dengan isian coklat', 10000.00, 'biskuit_coklat.jpg', 118, 'Makanan', '2025-07-27 17:21:01'),
-(15, 'test berubah', 'test joki', 20000.00, '687b64fb1518b.jpeg', 11, 'Dapur & Bahan Masak', '2025-07-27 17:12:54');
+(2, 'Kopi Hitam Bubuk', 'Kopi hitam murni tanpa ampas', 15000.00, 'kopi_hitam.jpg', 48, 'Minuman', '2025-07-28 01:33:59'),
+(3, 'Sabun Mandi Cair', 'Sabun mandi dengan aroma menyegarkan', 20000.00, 'sabun_mandi.jpg', 72, 'Kesehatan & Kebersihan', '2025-07-28 01:33:59'),
+(4, 'Minyak Goreng Kemasan 1 Liter', 'Minyak goreng berkualitas baik', 25000.00, 'minyak_goreng.jpg', 34, 'Dapur & Bahan Masak', '2025-07-28 01:33:59'),
+(5, 'Biskuit Coklat', 'Biskuit renyah dengan isian coklat', 10000.00, 'biskuit_coklat.jpg', 117, 'Makanan', '2025-07-28 01:33:59'),
+(15, 'test berubah', 'test joki', 20000.00, '687b64fb1518b.jpeg', 10, 'Dapur & Bahan Masak', '2025-07-28 01:33:59');
 
 --
 -- Triggers `produk`
@@ -177,7 +183,12 @@ INSERT INTO `stock_logs` (`id`, `product_id`, `order_id`, `old_stock`, `new_stoc
 (13, 1, NULL, 99, 96, -3, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
 (14, 3, NULL, 74, 73, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
 (15, 4, NULL, 39, 36, -3, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
-(16, 5, NULL, 119, 118, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL);
+(16, 5, NULL, 119, 118, -1, 'reduction', 'Stock updated via system', '2025-07-27 17:21:01', NULL),
+(17, 2, NULL, 50, 48, -2, 'reduction', 'Stock updated via system', '2025-07-28 01:33:59', NULL),
+(18, 3, NULL, 73, 72, -1, 'reduction', 'Stock updated via system', '2025-07-28 01:33:59', NULL),
+(19, 4, NULL, 36, 34, -2, 'reduction', 'Stock updated via system', '2025-07-28 01:33:59', NULL),
+(20, 5, NULL, 118, 117, -1, 'reduction', 'Stock updated via system', '2025-07-28 01:33:59', NULL),
+(21, 15, NULL, 11, 10, -1, 'reduction', 'Stock updated via system', '2025-07-28 01:33:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -256,13 +267,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -274,7 +285,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `stock_logs`
 --
 ALTER TABLE `stock_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`

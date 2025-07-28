@@ -433,10 +433,10 @@ function getStatusBadge($status)
                                                         </a>
 
                                                         <!-- View Detail Button -->
-                                                        <button class="btn btn-sm btn-outline-info action-btn btn-detail"
+                                                        <!-- <button class="btn btn-sm btn-outline-info action-btn btn-detail"
                                                             data-order-id="<?= $order['id'] ?>" title="Lihat Detail">
                                                             <i class="fas fa-eye"></i>
-                                                        </button>
+                                                        </button> -->
 
                                                         <!-- Print Receipt Button -->
                                                         <button class="btn btn-sm btn-outline-secondary action-btn btn-print"

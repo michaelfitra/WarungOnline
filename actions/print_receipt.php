@@ -3,11 +3,6 @@
 require_once '../includes/db.php';
 require_once '../includes/auth_check.php';
 
-// Periksa apakah user adalah admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    die('Akses ditolak');
-}
-
 // Periksa parameter order_id
 if (!isset($_GET['order_id'])) {
     die('Order ID tidak ditemukan');
